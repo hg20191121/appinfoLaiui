@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hisoft.appliinfo.dao.app_info.AppInfoMapper">
+
+    <resultMap id="infoMap" type="com.hisoft.appliinfo.pojo.AppInfo">
+        <!--加上主键提高查询速率-->
+        <id property="id" column="id"/>
+
+        <association property="categoryLevel1Name"
+                     column="categoryLevel1"
+                     select="com.hisoft.appliinfo.dao.app_category.AppCategoryMapper.getNameById"/>
+
+        <association property="categoryLevel2Name"
+                     column="categoryLevel2"
+                     select="com.hisoft.appliinfo.dao.app_category.AppCategoryMapper.getNameById"/>
+
+        <association property="categoryLevel3Name"
+                     column="categoryLevel3"
+                     select="com.hisoft.appliinfo.dao.app_category.AppCategoryMapper.getNameById"/>
+
+        <association property="flatformName"
+                     column="flatformId"
+                     select="com.hisoft.appliinfo.dao.data_dictionary.DataDictionaryMapper.queryAppFlatformByValueId"/>
+
+        <association property="statusName"
+                     column="status"
+                     select="com.hisoft.appliinfo.dao.data_dictionary.DataDictionaryMapper.queryAppStatusByValueId"/>
+
+        <association property="versionName"
+                     column="versionId"
+                     select="versionName"/>
+    </resultMap>
+    <!--第一次加载，只加载前五条-->
+    <select id="queryAll" parameterType="com.hisoft.appliinfo.pojo.AppInfo" resultMap="infoMap">
+        select * from app_info limit #{currNo},5;
+    </select>
+
+    <select id="versionName" parameterType="integer" resultType="java.lang.String">
+        select versionNo from app_version where id = #{id};
+    </select>
+
+    <!--模糊查询-->
+    <select id="queryAllByMap" resultMap="infoMap">
+        select * from app_info where 1 = 1
+        <if test="softwareName != null and softwareName != ''">
+            and softwareName like concat('%',#{softwareName},'%')
+        </if>
+
+        <if test="status != null and status != ''">
+            and 'status' = cast(#{status} as signed)
+        </if>
+
+        <if test="flatformId != null and flatformId != ''">
+            and flatformId = cast(#{flatformId} as signed)
+        </if>
+
+        <if test="categoryLevel1 != null and categoryLevel1 != ''">
+            and categoryLevel1 = cast(#{categoryLevel1} as signed)
+        </if>
+
+        <if test="categoryLevel2 != null and categoryLevel2 != ''">
+            and categoryLevel2 = cast(#{categoryLevel2} as signed)
+        </if>
+
+        <if test="categoryLevel3 != null and categoryLevel3 != ''">
+            and categoryLevel3 = cast(#{categoryLevel3} as signed)
+        </if>
+        limit #{currNo},5;
+    </select>
+
+    <!--全部的条数-->
+    <select id="getCount" resultType="java.lang.Integer">
+        select count(1) from app_info;
+    </select>
+    <!--经过过滤的条数-->
+    <select id="getCountByMap" resultType="java.lang.Integer">
+        select count(1) from app_info where 1=1
+        <if test="softwareName != null and softwareName != ''">
+            and softwareName like concat('%',#{softwareName},'%')
+        </if>
+
+        <if test="status != null and status != ''">
+            and 'status' = cast(#{status} as signed)
+        </if>
+
+        <if test="flatformId != null and flatformId != ''">
+            and flatformId = cast(#{flatformId} as signed)
+        </if>
+
+        <if test="categoryLevel1 != null and categoryLevel1 != ''">
+            and categoryLevel1 = cast(#{categoryLevel1} as signed)
+        </if>
+
+        <if test="categoryLevel2 != null and categoryLevel2 != ''">
+            and categoryLevel2 = cast(#{categoryLevel2} as signed)
+        </if>
+
+        <if test="categoryLevel3 != null and categoryLevel3 != ''">
+            and categoryLevel3 = cast(#{categoryLevel3} as signed)
+        </if>
+    </select>
+
+    <!-- /*select * from app_info where id = 48 and  softwareName like concat('%',#{params.formField[softwareName]},'%');*/-->
+    <!--<select id="queryAll" resultMap="infoMap">
+        select ai.*,av.versionNo as versionName,dd.valueName as statusName from app_info ai,data_dictionary dd,app_version av
+        where ai.versionId=av.id and ai.`status` = dd.valueId and dd.typeCode='APP_STATUS';
+    </select>-->
+
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hisoft.appliinfo.dao.app_category.AppCategoryMapper">
+
+    <select id="queryById" resultType="com.hisoft.appliinfo.pojo.AppCategory">
+        select * from app_category where id = #{id}
+    </select>
+
+    <resultMap id="FirstCategoryMap" type="com.hisoft.appliinfo.pojo.AppCategory">
+        <id column="id" property="id"/>
+        <!--第二层的集合-->
+        <collection property="childAppCategory"
+                    column="id"
+                    select="queryByParentId">
+        </collection>
+    </resultMap>
+    <resultMap id="SecondCategoryMap" type="com.hisoft.appliinfo.pojo.AppCategory">
+        <id column="id" property="id"/>
+        <!--第三层的集合，没有子集了-->
+        <collection property="childAppCategory"
+                    column="id"
+                    select="queryEnd">
+        </collection>
+    </resultMap>
+    <!--从一级菜单开始找，并为每一个一级菜单绑上二级菜单，二级菜单绑上三级菜单-->
+    <select id="queryAll" resultMap="FirstCategoryMap">
+        select * from app_category where parentId is null;
+    </select>
+    <!--每一个一级菜单下都有，很多的二级菜单，二级菜单下有三级菜单-->
+    <select id="queryByParentId" resultMap="SecondCategoryMap">
+        select * from app_category where parentId = #{id};
+    </select>
+
+    <!--三级菜单下没有四级菜单终止循环，也就是最后一层-->
+    <select id="queryEnd" resultType="com.hisoft.appliinfo.pojo.AppCategory">
+        select * from app_category where parentId = #{id}
+    </select>
+
+    <select id="getNameById" resultType="java.lang.String">
+        select categoryName from app_category where id = #{id};
+    </select>
+
+</mapper>
