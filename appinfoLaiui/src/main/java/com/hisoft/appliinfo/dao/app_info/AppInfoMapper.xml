@@ -32,6 +32,20 @@
                      column="versionId"
                      select="versionName"/>
     </resultMap>
+    <update id="updateByMap">
+        update app_info set
+        softwareName = #{softwareName},softwareSize=#{softwareSize},
+        supportROM = #{supportROM},interfaceLanguage = #{interfaceLanguage},
+        downloads = #{downloads},flatformId = #{flatformId},
+        categoryLevel1 = #{categoryLevel1},categoryLevel2 = #{categoryLevel2},categoryLevel3 = #{categoryLevel3},
+        appInfo =#{appInfo},modifyDate=#{modifyDate},modifyBy=#{modifyBy}
+        where id = cast(#{id} as signed)
+    </update>
+
+    <update id="updateVersionByMap">
+        update app_info set versionId = #{versionId} where id = #{id};
+    </update>
+
     <!--第一次加载，只加载前五条-->
     <select id="queryAll" parameterType="com.hisoft.appliinfo.pojo.AppInfo" resultMap="infoMap">
         select * from app_info limit #{currNo},5;
@@ -100,6 +114,14 @@
         <if test="categoryLevel3 != null and categoryLevel3 != ''">
             and categoryLevel3 = cast(#{categoryLevel3} as signed)
         </if>
+    </select>
+
+    <select id="queryById" resultMap="infoMap">
+        select * from app_info where id = #{id};
+    </select>
+
+    <select id="getVersionIdById" resultType="java.lang.Integer">
+        select versionId from app_info where id =#{id};
     </select>
 
     <!-- /*select * from app_info where id = 48 and  softwareName like concat('%',#{params.formField[softwareName]},'%');*/-->

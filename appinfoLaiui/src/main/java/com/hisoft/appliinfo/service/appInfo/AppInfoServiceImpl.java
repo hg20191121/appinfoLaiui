@@ -52,4 +52,24 @@ public class AppInfoServiceImpl implements AppInfoService{
         return appInfoMapper.getCountByMap(infoMap);
     }
 
+    @Override
+    public AppInfo queryById(Integer id) {
+        return appInfoMapper.queryById(id);
+    }
+
+    @Override
+    public Integer updateByMap(Map map) {
+        return appInfoMapper.updateByMap(map);
+    }
+
+    @Override
+    public Integer getVersionIdById(Integer id) {
+        return appInfoMapper.getVersionIdById(id);
+    }
+
+    @Override
+    public Integer updateVersionByMap(Map map) {
+        return appInfoMapper.updateVersionByMap(map);
+    }
+
 }

@@ -27,4 +27,6 @@ public interface DataDictionaryMapper {
     /*public DataDictionary queryAppFlatformByValueId(@Param(value = "valueId")Integer valueId,
                                                     @Param(value = "typeCode")String typeCode);*/
     public String queryAppStatusByValueId(Integer valueId);
+
+    public String queryPublicByValueId(Integer valueId);
 }

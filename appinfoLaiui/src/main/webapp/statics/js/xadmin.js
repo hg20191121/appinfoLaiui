@@ -94,7 +94,11 @@
 	        shadeClose: true,
 	        shade:0.4,
 	        title: title,
-	        content: url
+	        content: url,
+            end: function () {
+	            location.reload();
+                // $(".layui-body").load();
+            }
 	    });
 	    if(full){
 	       layer.full(index); 

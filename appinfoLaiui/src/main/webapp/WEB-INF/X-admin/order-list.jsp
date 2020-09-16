@@ -170,17 +170,17 @@
                                                 </c:when>
                                             </c:choose>
                                             <li>
-                                                <a onclick="xadmin.add_tab('新增版本','${pageContext.request.contextPath}/appInfoController/order-view.html/${appInfo.id}')">新增版本</a>
+                                                <a onclick="xadmin.open('新增版本','${pageContext.request.contextPath}/appVersion/appVersion-add.html/${appInfo.id}')">新增版本</a>
                                             </li>
                                             <li>
-                                                <a onclick="xadmin.add_tab('修改版本','${pageContext.request.contextPath}/appInfoController/order-view.html/${appInfo.id}')">修改版本</a>
+                                                <a onclick="xadmin.open('修改版本','${pageContext.request.contextPath}/appVersion/appVersion-modify.html/${appInfo.id}')">修改版本</a>
                                             </li>
                                             <li>
-                                                <a onclick="xadmin.add_tab('修改信息','${pageContext.request.contextPath}/appInfoController/app-modify.html')">
+                                                <a onclick="xadmin.open('修改信息','${pageContext.request.contextPath}/appInfoController/app-modify.html/${appInfo.id}')">
                                                     <cite>修改</cite></a>
                                             </li>
                                             <li>
-                                                <a onclick="xadmin.add_tab('查看信息','${pageContext.request.contextPath}/appInfoController/order-view.html');location.reload()">查看</a>
+                                                <a onclick="xadmin.open('查看信息','${pageContext.request.contextPath}/appInfoController/app-view.html/${appInfo.id}')">查看</a>
                                             </li>
                                             <li><a>删除</a></li>
                                         </ul>
@@ -288,23 +288,23 @@
                             '                                        </button>\n' +
                             '                                        <ul class="dropdown-menu" role="menu">\n';
                         // if ()
-                            str +=
-                                '                                            <li><a>上架</a>\n' +
-                                '                                            </li>\n' +
-                                '                                            <li><a>新增版本</a>\n' +
-                                '                                            </li>\n' +
-                                '                                            <li><a>修改版本</a>\n' +
-                                '                                            </li>\n' +
-                                '                                            <li><a>修改</a></li>\n' +
-                                '                                            <li>\n' +
+                        str +=
+                            '                                            <li><a>上架</a>\n' +
+                            '                                            </li>\n' +
+                            '                                            <li><a>新增版本</a>\n' +
+                            '                                            </li>\n' +
+                            '                                            <li><a>修改版本</a>\n' +
+                            '                                            </li>\n' +
+                            '                                            <li><a>修改</a></li>\n' +
+                            '                                            <li>\n' +
 
-                                '                                                <a onclick="xadmin.add_tab(\'订单列表\',\'${pageContext.request.contextPath}/appInfoController/order-view.html\')">查看</a>\n' +
-                                '                                            </li>\n' +
-                                '                                            <li><a>删除</a></li>\n' +
-                                '                                        </ul>\n' +
-                                '                                    </div>\n' +
-                                '                                </td>\n' +
-                                '                            </tr>';
+                            '                                                <a onclick="xadmin.add_tab(\'订单列表\',\'${pageContext.request.contextPath}/appInfoController/order-view.html\')">查看</a>\n' +
+                            '                                            </li>\n' +
+                            '                                            <li><a>删除</a></li>\n' +
+                            '                                        </ul>\n' +
+                            '                                    </div>\n' +
+                            '                                </td>\n' +
+                            '                            </tr>';
                     }
                     $("#formTbody").html(str);
                     //拿到表单数据
@@ -440,15 +440,20 @@
                     '                                        <ul class="dropdown-menu" role="menu">\n' +
                     '                                            <li><a>上架</a>\n' +
                     '                                            </li>\n' +
-                    '                                            <li><a>新增版本</a>\n' +
+                    '<li>\n' +
+                    '                                                <a onclick="xadmin.open(\'新增版本\',\'${pageContext.request.contextPath}/appVersion/appVersion-add.html/' + appInfo.id + '\')">新增版本</a>\n' +
                     '                                            </li>\n' +
-                    '                                            <li><a>修改版本</a>\n' +
-                    '                                            </li>\n' +
-                    '                                            <li><a>修改</a></li>\n' +
                     '                                            <li>\n' +
-                    '                                                <a onclick="xadmin.open(\'查看订单\',\'${pageContext.request.contextPath}/appInfoController/order-view.html\',800,600)">查看</a>\n' +
+                    '                                                <a onclick="xadmin.open(\'修改版本\',\'${pageContext.request.contextPath}/appVersion/appVersion-modify.html/' + appInfo.id + '\')">修改版本</a>\n' +
                     '                                            </li>\n' +
-                    '                                            <li><a>删除</a></li>\n' +
+                    '                                            <li>\n' +
+                    '                                                <a onclick="xadmin.open(\'修改信息\',\'${pageContext.request.contextPath}/appInfoController/app-modify.html/' + appInfo.id + '\')">\n' +
+                    '                                                    <cite>修改</cite></a>\n' +
+                    '                                            </li>\n' +
+                    '                                            <li>\n' +
+                    '                                                <a onclick="xadmin.open(\'查看信息\',\'${pageContext.request.contextPath}/appInfoController/app-view.html/' + appInfo.id + '\')">查看</a>\n' +
+                    '                                            </li>\n' +
+                    '                                            <li><a>删除</a></li>' +
                     '                                        </ul>\n' +
                     '                                    </div>\n' +
                     '                                </td>\n' +

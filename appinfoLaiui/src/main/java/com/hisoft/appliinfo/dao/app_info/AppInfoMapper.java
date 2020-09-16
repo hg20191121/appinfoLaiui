@@ -1,6 +1,7 @@
 package com.hisoft.appliinfo.dao.app_info;
 
 import com.hisoft.appliinfo.pojo.AppInfo;
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.Appinfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -23,4 +24,12 @@ public interface AppInfoMapper {
     public List<AppInfo> queryAllByMap(Map<String,Object> infoMap);
 
     public String versionName(Integer id);
+
+    public AppInfo queryById(Integer id);
+
+    public Integer getVersionIdById(Integer id);
+
+    public Integer updateByMap(Map map);
+
+    public Integer updateVersionByMap(Map map);
 }
